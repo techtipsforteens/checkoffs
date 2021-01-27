@@ -1,4 +1,4 @@
-#Checkoffs- Web Edition
+<h1><strong>Checkoffs- Web Edition</strong></h1>
 
 <h1>About</h1>
 Checkoffs has been redesigned for the web. Now, you can do everything from your browser window.
