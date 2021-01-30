@@ -5,4 +5,5 @@ Checkoffs has been redesigned for the web. Now, you can do everything from your 
 Checkoffs is a simple, lightweight, task manager that helps keep you organized.
 <br>
 <h1>Installation</h1>
+If you want to try it out without downloading anything, just go to <a href="https://checkoffsweb.000webhostapp.com/">here</a>
 Just git clone the respiratory, and open the html file in your browser.
