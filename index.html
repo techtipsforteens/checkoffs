@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Checkoffs</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div style="background-color:lightblue; padding-top: 10px; padding-bottom: 10px;"><h1>Checkoffs</h1><br><p>Version 4.0</p></div>
+    <ul>
+    <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">File</a>
+        <div class="dropdown-content">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+        </div>
+    </li>
+    <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">Edit</a>
+        <div class="dropdown-content">
+        <a onclick="addNew()">Add New</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+        </div>
+    </li>
+    <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">View</a>
+        <div class="dropdown-content">
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+        </div>
+    </li>
+    <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">Help</a>
+        <div class="dropdown-content">
+        <a onclick="about()">About</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+        </div>
+    </li>
+    </ul>
+    <br>
+    <div id="console" style="border:5px outset black; padding:5px 5px">
+        <div id="subconsole"></div>
+        <div id="tasks"></div>
+    </div>
+    <script src="script.js" defer>
+    </script>
+  </body>
+</html>
