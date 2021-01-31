@@ -28,7 +28,24 @@
 	border:1px solid #000000;
 }
 
-#tb:hover, #addnew, #submit-button:hover {
+#tbp2 {
+	border-radius: 5px;
+	background-color: red;
+	color: black;
+	padding: 10px 10px;
+	font-weight: bold;
+	border:1px solid #000000;
+}
+
+#tbp1 {
+	border-radius: 5px;
+	background-color: #eb8934;
+	color: black;
+	padding: 10px 10px;
+	border:1px solid #000000;
+}
+
+#tb:hover, #tbp1:hover, #tbp2:hover, #addnew, #submit-button:hover {
 	border-radius: 5px;
 	background-color: white;
 	color: black;
@@ -54,20 +71,15 @@ ul {
 }
 
 @keyframes intro {
-	0% {background-color: lightblue;}
+	0% {background-color: #7de5fa;}
 	50% {background-color: white;}
-	100% {background-color: lightblue;}
-}
-
-@keyframes titleintro {
-	0% {padding-top: 50px;}
-	100% {padding-top: 10px;}
+	100% {background-color: #7de5fa;}
 }
 
 #console {
 	animation-name: intro;
 	animation-duration: 3s;
-	background-color: lightblue;
+	background-color: #7de5fa;
 }
 
 li {
@@ -83,7 +95,7 @@ li a, .dropbtn {
 }
 
 li a:hover, .dropdown:hover .dropbtn {
-  background-color: lightblue;
+  background-color: #7de5fa;
   color: black;
   border:1px solid #000000;
 }
