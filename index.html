@@ -5,43 +5,40 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div style="background-color:lightblue; padding-top: 10px; padding-bottom: 10px;"><h1>Checkoffs</h1><br><p>Version 4.0</p></div>
+    <div style="background-color:#7de5fa; padding-top: 10px; padding-bottom: 10px;"><h1>Checkoffs</h1><br><p>Version 4.1</p></div>
     <ul>
     <li class="dropdown">
-        <a href="javascript:void(0)" class="dropbtn">File</a>
+        <!--- <a href="javascript:void(0)" class="dropbtn">File</a>
         <div class="dropdown-content">
         <a href="#">Link 1</a>
         <a href="#">Link 2</a>
         <a href="#">Link 3</a>
         </div>
-    </li>
+    </li> --->
     <li class="dropdown">
         <a href="javascript:void(0)" class="dropbtn">Edit</a>
         <div class="dropdown-content">
         <a onclick="addNew()">Add New</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+        <!-- <a href="#">Edit task</a> --->
         </div>
     </li>
     <li class="dropdown">
         <a href="javascript:void(0)" class="dropbtn">View</a>
         <div class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+        <a href="#" onclick="filterTasks()">Filter Tasks</a>
+        <!--- <a href="#">Sort Tasks</a> --->
         </div>
     </li>
     <li class="dropdown">
         <a href="javascript:void(0)" class="dropbtn">Help</a>
         <div class="dropdown-content">
         <a onclick="about()">About</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+        <!--- <a href="#">How to Use</a> --->
         </div>
     </li>
     </ul>
     <br>
-    <div id="console" style="border:5px outset black; padding:5px 5px">
+    <div id="console" style="border:5px outset black; padding:5px 5px; border-radius:10px;">
         <div id="subconsole"></div>
         <div id="tasks"></div>
     </div>
