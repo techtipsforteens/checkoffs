@@ -57,7 +57,7 @@
 	padding: 10px;
 }
 
-#taskname {
+#taskname, #tasktext {
 	border-radius: 5px;
 	font-size: 20px;
 }
