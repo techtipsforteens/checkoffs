@@ -1,19 +1,40 @@
 //var taskcontent;
-var tasks = ["This is a task.", "This is another task, with medium priority.", "This task has high priority.", "And so on..."]
-var taskps = new Array(0, 1, 2, 0, 2)
+var tasks = ["This is a task.", "This is another task with medium priority.", "This task has high priority.", "And so on..."]
+var taskps = new Array(0, 1, 2, 0)
+var taskcontent;
+var priocontent;
+var allcontent;
+var lists = ["Tasks"];
+var curlist = "Tasks";
+var tls = ["Tasks", "Tasks", "Tasks", "Tasks"]
 var numberoftasks = 0
 var taskcounter = 0;
+var listcounter = 0;
 var filter = ["a"];
-var sort = [""]
+var sort = [""];
 
 function about() {
     document.getElementById("tasks").innerHTML = "";
     document.getElementById("subconsole").innerHTML = "<button id='x' onclick='showTasks()'>X</button><h1>About</h1><br><p>Checkoffs is a web based task manager application, origionaly written in Python.</p>";
 }
 
+function sl(listnumber) {
+    curlist = lists[listnumber];
+    console.log(curlist);
+    showTasks();
+}
+
 function showTasks() {
+    listcounter = 0;
     var sthtml = ""
-    document.getElementById("subconsole").innerHTML = "<h1>Tasks</h1><button id='addnew' onclick='addNew()'>Add New</button><br><br>";
+    var numberoflists = lists.length;
+    var lhtml = "<ul>"
+    while (listcounter != numberoflists) {
+        lhtml = lhtml + "<li class='dropdown'><a href='javascript:void(0)' class='dropbtn' onclick='sl(" + listcounter + ")'>" + lists[listcounter] + "</a></li>";
+        listcounter = listcounter + 1;
+    }
+    document.getElementById("lists").innerHTML = lhtml + "</ul>"
+    document.getElementById("subconsole").innerHTML = "<h1>" + curlist + "</h1><button id='addnew' onclick='addNew()'>Add New</button><br><br>";
     var numberoftasks = tasks.length;
     taskcounter = 0;
     if (sort[0] == "alpha") {
@@ -23,9 +44,11 @@ function showTasks() {
     if (sort[0] == "prio") {
         while (taskcounter != numberoftasks) {
             if (taskps[(taskcounter)] == 2) {
+                if (curlist == tls[taskcounter]) {
                 var sthtml = sthtml + "<button id = 'tbp2' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                 var sthtml = sthtml + "<strong>" + tasks[(taskcounter)] + "</strong>";
                 var sthtml = sthtml + "<br><br>";
+            }
             }
         taskcounter = taskcounter + 1;
         }
@@ -33,9 +56,11 @@ function showTasks() {
         while (taskcounter != numberoftasks) {
             if (taskps[(taskcounter)] == 1) {
                 if (filter[0] != "h") {
+                    if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tbp1' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
                     var sthtml = sthtml + "<br><br>";
+                    }
                 }
             }
         taskcounter = taskcounter + 1;
@@ -44,9 +69,11 @@ function showTasks() {
         while (taskcounter != numberoftasks) {
             if (taskps[(taskcounter)] == 0) {
                 if (filter[0] == "a") {
+                    if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tb' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
                     var sthtml = sthtml + "<br><br>";
+                    }
                 }
             }
         taskcounter = taskcounter + 1;
@@ -55,20 +82,26 @@ function showTasks() {
         while (taskcounter != numberoftasks) {
             if (taskps[(taskcounter)] == 0) {
                 if (filter[0] == "a") {
+                    if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tb' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
                     var sthtml = sthtml + "<br><br>";
+                    }
                 }
             } else if (taskps[(taskcounter)] == 1) {
                 if (filter[0] != "h") {
+                    if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tbp1' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
                     var sthtml = sthtml + "<br><br>";
+                    }
                 }
             } else if (taskps[(taskcounter)] == 2) {
+                if (curlist == tls[taskcounter]) {
                 var sthtml = sthtml + "<button id = 'tbp2' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                 var sthtml = sthtml + "<strong>" + tasks[(taskcounter)] + "</strong>";
                 var sthtml = sthtml + "<br><br>";
+                }
             }
         var taskcounter = taskcounter + 1;
         }
@@ -78,20 +111,31 @@ function showTasks() {
 
 function addNew() {
     document.getElementById("tasks").innerHTML = "";
-    document.getElementById("subconsole").innerHTML = "<button id='x' onclick='showTasks()'>X</button><h1>Add New Task</h1><br><form name='addTaskForm'onsubmit='return insertTask()'><h2>Task Name</h2><br><input type='text' id='taskname' name='taskname'></input><br><br><h2>Task Priority</h2><br><input type='radio' id='low' name='taskp' value=0></input><label for='low'>Low</label><br><input type='radio' id='medium' name='taskp' value=1></input><label for='medium'>Medium</label><br><input type='radio' id='high' name='taskp' value=2></input><label for='high'>High</label><br><br><br><input type='submit' id='submit-button' value='Submit'></form>"
+    var anhtml = "<button id='x' onclick='showTasks()'>X</button><h1>Add New Task</h1><br><form name='addTaskForm'onsubmit='return insertTask()'><h2>Task Name</h2><br><input type='text' id='taskname' name='taskname'></input><br><br><h2>Task Priority</h2><br><input type='radio' id='low' name='taskp' value=0></input><label for='low'>Low</label><br><input type='radio' id='medium' name='taskp' value=1></input><label for='medium'>Medium</label><br><input type='radio' id='high' name='taskp' value=2></input><label for='high'>High</label><br><h2>List</h2><br>";
+    var numberoflists = lists.length;
+    listcounter = 0;
+    while (numberoflists != listcounter) {
+        anhtml = anhtml + "<input type='radio' id='" + lists[listcounter] + "' name='clist' value='" + lists[listcounter] + "'></input><label for='" + lists[listcounter] + "'>" + lists[listcounter] + "</label><br>";
+        listcounter = listcounter + 1;
+    }
+    anhtml = anhtml + "<br><br><br><input type='submit' id='submit-button' value='Submit'></form>";
+    document.getElementById("subconsole").innerHTML = anhtml;
 }
 
 function insertTask() {
     var x = document.forms["addTaskForm"]["taskname"].value;
     var y = document.forms["addTaskForm"]["taskp"].value;
+    var yy = document.forms["addTaskForm"]["clist"].value;
     tasks.push(x);
     taskps.push(y);
+    tls.push(yy);
     showTasks();
 }
 
 function completeTask(tasknumber) {
     tasks.splice(tasknumber, 1);
     taskps.splice(tasknumber, 1);
+    tls.splice(tasknumber, 1);
     showTasks()
 }
 
@@ -120,31 +164,44 @@ function insertSorting() {
 
 function editTask() {
     document.getElementById("tasks").innerHTML = "";
-    document.getElementById("subconsole").innerHTML = "<button id='x' onclick='showTasks()'>X</button><h1>Edit Task</h1><br><form name='editTaskForm' onsubmit='return insertEditing()'><h2>Task Number</h2><br><input type='text' id='tasknumber' name='tasknumber'></input><br><h2>Task Text</h2><br><input type='text' id='tasktext' name='tasktext'></input><br><br><br><input type='submit' id='submit-button' value='Submit'></form>";
+    var ethtml = "<button id='x' onclick='showTasks()'>X</button><h1>Edit Task</h1><br><form name='editTaskForm' onsubmit='return insertEditing()'><h2>Task Number</h2><br><input type='text' id='tasknumber' name='tasknumber'></input><br><h2>Task Text</h2><br><input type='text' id='tasktext' name='tasktext'></input><br><h2>List</h2>";
+    var numberoflists = lists.length;
+    listcounter = 0;
+    while (numberoflists != listcounter) {
+        ethtml = ethtml + "<input type='radio' id='" + lists[listcounter] + "' name='clist' value='" + lists[listcounter] + "'></input><label for='" + lists[listcounter] + "'>" + lists[listcounter] + "</label><br>";
+        listcounter = listcounter + 1;
+    }
+    ethtml = ethtml + "<br><br><br><input type='submit' id='submit-button' value='Submit'></form>";
+    document.getElementById("subconsole").innerHTML = ethtml;
 }
 
 function insertEditing() {
     var w = document.forms["editTaskForm"]["tasknumber"].value;
     var v = document.forms["editTaskForm"]["tasktext"].value;
+    var vv = document.forms["editTaskForm"]["clist"].value;
     tasks[(w-1)] = v;
+    tls[(w-1)] = vv;
     showTasks()
 }
 
 function saveTasks() {
-    var textToSave = tasks;
-    var hiddenElement = document.createElement('a');
+    // Tasks
+    var textToSave1 = tasks + "&&&" + taskps + "&&&" + tls + "&&&" + lists;
+    var hiddenElement1 = document.createElement('a');
     
-    hiddenElement.href = 'data:attachment/text,' + encodeURI(textToSave);
-    hiddenElement.target = '_blank';
-    hiddenElement.download = 'tasks.txt';
-    hiddenElement.click();
+    hiddenElement1.href = 'data:attachment/text,' + encodeURI(textToSave1);
+    hiddenElement1.target = '_blank';
+    hiddenElement1.download = 'tasks.txt';
+    hiddenElement1.click();
 }
 
-//Importing tasks is under developement.
-
-/*function showImportForm() {
+function showImportForm() {
     document.getElementById("tasks").innerHTML = "";
-    document.getElementById("subconsole").innerHTML = "<button id='x' onclick='showTasks()'>X</button><h1>Import Tasks</h1><br><h2>Import Tasks</h2><br><button id='submit' onclick='importTasks()'>Add File</button><h2>Import Priorities</h2><br><button id='submit' onclick='importPriorities()'>Add File</button>"
+    document.getElementById("subconsole").innerHTML = "<button id='x' onclick='showTasks()'>X</button><h1>Import Tasks</h1><br><button id='submit' onclick='importTasks()'>Add File</button>"
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function importTasks() {
@@ -162,53 +219,70 @@ function importTasks() {
 
     // here we tell the reader what to do when it's done reading...
     reader.onload = readerEvent => {
-        var taskcontent = readerEvent.target.result; // this is the content!
-        console.log( taskcontent );
-        insertImport("tasks")
+        allcontent = readerEvent.target.result; // this is the content!
+        var raallcontent = allcontent.split("&&&");
+        var rataskcontent = raallcontent[0].split(",");
+        var rapriocontent = raallcontent[1].split(",");
+        var ratlscontent = raallcontent[2].split(",");
+        var ralistscontent = raallcontent[3].split(",");
+        tasks = rataskcontent;
+        taskps = rapriocontent;
+        tls = ratlscontent;
+        lists = ralistscontent;
+
+        showTasks();
     }
 
 }
-
 input.click();
 }
 
-function importPriorities() {
-    var input = document.createElement('input');
-    input.type = 'file';
+function insertList() {
+    var t = document.forms["addListForm"]["listtext"].value;
+    lists.push(t);
+    showTasks();
+}
 
-    input.onchange = e => { 
+function addList() {
+    document.getElementById("tasks").innerHTML = "";
+    document.getElementById("subconsole").innerHTML = "<button id='x' onclick='showTasks()'>X</button><h1>Add New List</h1><br><form name='addListForm' onsubmit='return insertList()'><h2>List Name</h2><br><input type='text' id='listtext' name='listtext'></input><br><br><br><input type='submit' id='submit-button' value='Submit' onclick='return insertList()'></form>";
+}
 
-    // getting a hold of the file reference
-    var file = e.target.files[0]; 
-
-    // setting up the reader
-    var reader = new FileReader();
-    reader.readAsText(file,'UTF-8');
-
-    // here we tell the reader what to do when it's done reading...
-    reader.onload = readerEvent => {
-        var priocontent = readerEvent.target.result; // this is the content!
-        console.log( priocontent );
-        insertImport("priority")
+function insertEl() {
+    var r = document.forms["editListForm"]["clist"].value;
+    var s = document.forms["editListForm"]["listtext"].value;
+    var numberoflists = lists.length;
+    listcounter = 0;
+    while (numberoflists != listcounter) {
+        if (r == lists[listcounter]) {
+            var listtochange = listcounter;
+        }
+        listcounter = listcounter + 1;
     }
-
-}
-
-input.click();
-}
-
-function insertImport(kind) {
-    if (kind == "tasks") {
-        var rearray = taskcontent.split(",");
-        var tasks = rearray;
-        console.log(tasks);
-    } else if (kind == "priority") {
-        var rearray = priocontent.split(",");
-        var taskps = rearray;
-        console.log(taskps);
+    var tlscounter = 0;
+    var numberoftasks = tasks.length;
+    while (numberoftasks != tlscounter) {
+        if (lists[listtochange] == tls[tlscounter]) {
+            tls[tlscounter] = s;
+        }
+        tlscounter = tlscounter + 1;
     }
-    showTasks()
+    lists[listtochange] = s;
+    curlist = lists[listtochange]; 
+    showTasks();
 }
-*/
+
+function editList() {
+    document.getElementById("tasks").innerHTML = "";
+    var elhtml = "<button id='x' onclick='showTasks()'>X</button><h1>Edit List</h1><br><h2>Choose List</h2><form name='editListForm' onsubmit='return insertEl()'>";
+    var numberoflists = lists.length;
+    listcounter = 0;
+    while (numberoflists != listcounter) {
+        elhtml = elhtml + "<input type='radio' id='" + lists[listcounter] + "' name='clist' value='" + lists[listcounter] + "'></input><label for='" + lists[listcounter] + "'>" + lists[listcounter] + "</label><br>";
+        listcounter = listcounter + 1;
+    }
+    elhtml = elhtml + "<h2>List Text</h2><br><input type='text' id='listtext' name='listtext'></input><br><br><br><input type='submit' id='submit-button' value='Submit'></form>";
+    document.getElementById("subconsole").innerHTML = elhtml;
+}
 
 showTasks()
