@@ -5,30 +5,32 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div style="background-color:#7de5fa; padding-top: 10px; padding-bottom: 10px;"><h1>Checkoffs</h1><br><p>Version 4.2</p></div>
+    <div style="background-color:#7de5fa; padding-top: 10px; padding-bottom: 10px;"><h1>Checkoffs</h1><br><p>Version 4.3</p></div>
     <ul>
-    <li class="dropdown">
+    <li class="dropdown" id="main">
         <a href="javascript:void(0)" class="dropbtn">File</a>
         <div class="dropdown-content">
         <a href="#" onclick="saveTasks()">Export Tasks</a>
-        <!--- <a href="#" onclick="showImportForm()">Import Tasks</a> --->
+        <a href="#" onclick="showImportForm()">Import Tasks</a>
         </div>
     </li>
-    <li class="dropdown">
+    <li class="dropdown" id="main">
         <a href="javascript:void(0)" class="dropbtn">Edit</a>
         <div class="dropdown-content">
         <a href="#" onclick="addNew()">Add New</a>
         <a href="#" onclick="editTask()">Edit Task</a>
+        <a href="#" onclick="addList()">Add List</a>
+        <a href="#" onclick="editList()">Edit List</a>
         </div>
     </li>
-    <li class="dropdown">
+    <li class="dropdown" id="main">
         <a href="javascript:void(0)" class="dropbtn">View</a>
         <div class="dropdown-content">
         <a href="#" onclick="filterTasks()">Filter Tasks</a>
         <a href="#" onclick="sortTasks()">Sort Tasks</a>
         </div>
     </li>
-    <li class="dropdown">
+    <li class="dropdown" id="main">
         <a href="javascript:void(0)" class="dropbtn">Help</a>
         <div class="dropdown-content">
         <a href="#" onclick="about()">About</a>
@@ -36,6 +38,9 @@
         </div>
     </li>
     </ul>
+    <br>
+    <div id = "lists">
+    </div>
     <br>
     <div id="console" style="border:5px outset black; padding:5px 5px; border-radius:10px;">
         <div id="subconsole"></div>
