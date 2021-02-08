@@ -6,6 +6,7 @@ var priocontent;
 var allcontent;
 var lists = ["Tasks"];
 var curlist = "Tasks";
+var curlistnum = 0;
 var tls = ["Tasks", "Tasks", "Tasks", "Tasks"]
 var numberoftasks = 0
 var taskcounter = 0;
@@ -20,7 +21,9 @@ function about() {
 
 function sl(listnumber) {
     curlist = lists[listnumber];
+    curlistnum = listnumber;
     console.log(curlist);
+    console.log(curlistnum);
     showTasks();
 }
 
@@ -37,11 +40,13 @@ function showTasks() {
     document.getElementById("subconsole").innerHTML = "<h1>" + curlist + "</h1><button id='addnew' onclick='addNew()'>Add New</button><br><br>";
     var numberoftasks = tasks.length;
     taskcounter = 0;
-    if (sort[0] == "alpha") {
+    console.log("fcln=" + filter[curlistnum]);
+    console.log("filter=" + filter);
+    if (sort[curlistnum] == "alpha") {
         tasks.sort()
         sort[0] = "";
     }
-    if (sort[0] == "prio") {
+    if (sort[curlistnum] == "prio") {
         while (taskcounter != numberoftasks) {
             if (taskps[(taskcounter)] == 2) {
                 if (curlist == tls[taskcounter]) {
@@ -55,7 +60,7 @@ function showTasks() {
         taskcounter = 0;
         while (taskcounter != numberoftasks) {
             if (taskps[(taskcounter)] == 1) {
-                if (filter[0] != "h") {
+                if (filter[curlistnum] != "h") {
                     if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tbp1' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
@@ -68,7 +73,7 @@ function showTasks() {
         taskcounter = 0;
         while (taskcounter != numberoftasks) {
             if (taskps[(taskcounter)] == 0) {
-                if (filter[0] == "a") {
+                if (filter[curlistnum] == "a") {
                     if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tb' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
@@ -81,7 +86,7 @@ function showTasks() {
     } else {
         while (taskcounter != numberoftasks) {
             if (taskps[(taskcounter)] == 0) {
-                if (filter[0] == "a") {
+                if (filter[curlistnum] == "a") {
                     if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tb' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
@@ -89,7 +94,7 @@ function showTasks() {
                     }
                 }
             } else if (taskps[(taskcounter)] == 1) {
-                if (filter[0] != "h") {
+                if (filter[curlistnum] != "h") {
                     if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tbp1' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
@@ -141,24 +146,67 @@ function completeTask(tasknumber) {
 
 function filterTasks() {
     document.getElementById("tasks").innerHTML = "";
-    document.getElementById("subconsole").innerHTML = "<button id='x' onclick='showTasks()'>X</button><h1>Filter Tasks</h1><br><form name='filterTasksForm'onsubmit='return insertFiltering()'><input type='radio' id='onlyHigh' name='filtering' value='h'></input><label for='onlyHigh'>Only high priority taks</label><br><input type='radio' id='aboveZero' name='filtering' value='az'></input><label for='aboveZero'>Only high and medium priority taks</label><br><input type='radio' id='all' name='filtering' value='a'></input><label for='all'>All tasks</label><br><br><input type='submit' id='submit-button' value='Submit'></form>"
+    var fthtml = "<button id='x' onclick='showTasks()'>X</button><h1>Filter Tasks</h1><br><form name='filterTasksForm'onsubmit='return insertFiltering()'><input type='radio' id='onlyHigh' name='filtering' value='h'></input><label for='onlyHigh'>Only high priority taks</label><br><input type='radio' id='aboveZero' name='filtering' value='az'></input><label for='aboveZero'>Only high and medium priority taks</label><br><input type='radio' id='all' name='filtering' value='a'></input><label for='all'>All tasks</label><br><h2>List To Filter</h2><br>";
+    var numberoflists = lists.length;
+    listcounter = 0;
+    while (numberoflists != listcounter) {
+        fthtml = fthtml + "<input type='radio' id='" + lists[listcounter] + "' name='clist' value='" + lists[listcounter] + "'></input><label for='" + lists[listcounter] + "'>" + lists[listcounter] + "</label><br>";
+        listcounter = listcounter + 1;
+    }
+    fthtml = fthtml + "<input type='radio' id='all' name='clist' value='all'></input><label for'all'>All Lists</lable><br><br><br><input type='submit' id='submit-button' value='Submit'></form>";
+    document.getElementById("subconsole").innerHTML = fthtml;
 }
 
 function insertFiltering() {
     var z = document.forms["filterTasksForm"]["filtering"].value;
-    filter[0] = z;
-    showTasks()
+    var zz = document.forms["filterTasksForm"]["clist"].value;
+    var numberoflists = lists.length;
+    listcounter = 0;
+    if (zz == "all") {
+        while (numberoflists != listcounter) {
+            filter[listcounter] = z;
+            listcounter = listcounter + 1;
+        }
+    }
+    while (numberoflists != listcounter) {
+        if (zz == lists[listcounter]) {
+            filter[listcounter] = z;
+        }
+        listcounter = listcounter + 1; 
+    }
+    showTasks();
 }
 
 function sortTasks() {
+    var othtml = "<button id='x' onclick='showTasks()'>X</button><h1>Sort Tasks</h1><br><form name='sortTasksForm'onsubmit='return insertSorting()'><input type='radio' id='alpha' name='sorting' value='alpha'></input><label for='alpha'>in alphebetic order</label><br><input type='radio' id='prio' name='sorting' value='prio'></input><label for='prio'>by priority</label><br><h2>List To Sort</h2><br>"
+    var numberoflists = lists.length;
+    listcounter = 0;
+    while (numberoflists != listcounter) {
+        othtml = othtml + "<input type='radio' id='" + lists[listcounter] + "' name='clist' value='" + lists[listcounter] + "'></input><label for='" + lists[listcounter] + "'>" + lists[listcounter] + "</label><br>";
+        listcounter = listcounter + 1;
+    }
+    othtml = othtml + "<input type='radio' id='all' name='clist' value='all'></input><label for'all'>All Lists</lable><br><br><br><input type='submit' id='submit-button' value='Submit'></form>";
     document.getElementById("tasks").innerHTML = "";
-    document.getElementById("subconsole").innerHTML = "<button id='x' onclick='showTasks()'>X</button><h1>Sort Tasks</h1><br><form name='sortTasksForm'onsubmit='return insertSorting()'><input type='radio' id='alpha' name='sorting' value='alpha'></input><label for='alpha'>in alphebetic order</label><br><input type='radio' id='prio' name='sorting' value='prio'></input><label for='prio'>by priority</label><br><br><input type='submit' id='submit-button' value='Submit'></form>"
+    document.getElementById("subconsole").innerHTML = othtml;
 }
 
 function insertSorting() {
     var u = document.forms["sortTasksForm"]["sorting"].value;
-    sort[0] = u;
-    console.log(sort[0])
+    var uu = document.forms["sortTasksForm"]["clist"].value;
+    var numberoflists = lists.length;
+    listcounter = 0;
+    if (uu == "all") {
+        while (numberoflists != listcounter) {
+            sort[listcounter] = u;
+            listcounter = listcounter + 1;
+        }
+    }
+    while (numberoflists != listcounter) {
+        if (uu == lists[listcounter]) {
+            sort[listcounter] = u;
+        }
+        listcounter = listcounter + 1; 
+    }
     showTasks();
 }
 
@@ -181,12 +229,16 @@ function insertEditing() {
     var vv = document.forms["editTaskForm"]["clist"].value;
     tasks[(w-1)] = v;
     tls[(w-1)] = vv;
-    showTasks()
+    showTasks();
 }
 
 function saveTasks() {
     // Tasks
-    var textToSave1 = tasks + "&&&" + taskps + "&&&" + tls + "&&&" + lists;
+    var tasksj = tasks.join("%%");
+    var taskpsj = taskps.join("%%");
+    var tlsj = tls.join("%%");
+    var listsj = lists.join("%%");
+    var textToSave1 = tasksj + "&&&" + taskpsj + "&&&" + tlsj + "&&&" + listsj;
     var hiddenElement1 = document.createElement('a');
     
     hiddenElement1.href = 'data:attachment/text,' + encodeURI(textToSave1);
@@ -197,7 +249,7 @@ function saveTasks() {
 
 function showImportForm() {
     document.getElementById("tasks").innerHTML = "";
-    document.getElementById("subconsole").innerHTML = "<button id='x' onclick='showTasks()'>X</button><h1>Import Tasks</h1><br><button id='submit' onclick='importTasks()'>Add File</button>"
+    document.getElementById("subconsole").innerHTML = "<button id='x' onclick='showTasks()'>X</button><h1>Import Tasks</h1><br><button id='submit' onclick='importTasks()'>Add File</button>";
 }
 
 function sleep(ms) {
@@ -221,10 +273,10 @@ function importTasks() {
     reader.onload = readerEvent => {
         allcontent = readerEvent.target.result; // this is the content!
         var raallcontent = allcontent.split("&&&");
-        var rataskcontent = raallcontent[0].split(",");
-        var rapriocontent = raallcontent[1].split(",");
-        var ratlscontent = raallcontent[2].split(",");
-        var ralistscontent = raallcontent[3].split(",");
+        var rataskcontent = raallcontent[0].split("%%");
+        var rapriocontent = raallcontent[1].split("%%");
+        var ratlscontent = raallcontent[2].split("%%");
+        var ralistscontent = raallcontent[3].split("%%");
         tasks = rataskcontent;
         taskps = rapriocontent;
         tls = ratlscontent;
@@ -240,6 +292,8 @@ input.click();
 function insertList() {
     var t = document.forms["addListForm"]["listtext"].value;
     lists.push(t);
+    filter.push("a");
+    sort.push("");
     showTasks();
 }
 
@@ -285,4 +339,4 @@ function editList() {
     document.getElementById("subconsole").innerHTML = elhtml;
 }
 
-showTasks()
+showTasks();
