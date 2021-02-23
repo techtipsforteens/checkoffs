@@ -1,5 +1,5 @@
 <h1><strong>Checkoffs- Web Edition</strong></h1>
-
+<img src="https://techtipsforteens.com/checkoffs/favicon.ico">
 <h1>About</h1>
 Checkoffs has been redesigned for the web. Now, you can do everything from your browser window.
 Checkoffs is a simple, lightweight, task manager that helps keep you organized.
