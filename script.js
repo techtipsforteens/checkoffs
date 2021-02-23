@@ -1,6 +1,6 @@
 //var taskcontent;
-var tasks = ["This is a task.", "This is another task with medium priority.", "This task has high priority.", "And so on..."]
-var taskps = new Array(0, 1, 2, 0)
+var tasks = ["This is a task.", "This is another task with medium priority.", "This task has high priority.", "And so on..."];
+var taskps = new Array("0", "1", "2", "0");
 var taskcontent;
 var priocontent;
 var allcontent;
@@ -14,6 +14,61 @@ var listcounter = 0;
 var filter = ["a"];
 var sort = [""];
 
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = document.cookie;
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function getCookies() {
+    cookies= document.cookie;
+    var a = getCookie("tasks");
+    var aa = a.split("%%");
+    if (a != "") {
+        tasks = aa;
+    }
+    var b = getCookie("taskps");
+    var bb = b.split("%%");
+    if (b != "") {
+        taskps = bb;
+    }
+    var c = getCookie("tls");
+    var cc = c.split("%%");
+    if (c != "") {
+        tls = cc;
+    }
+    var d = getCookie("lists");
+    var dd = d.split("%%");
+    if (d != "") {
+        lists = dd;
+    }
+}
+
+function writeCookies() {
+    var numberoftasks = tasks.length;
+    var numberoflists = lists.length;
+    taskcounter = 0;
+    listcounter = 0;
+    var taskcc = "tasks=" + tasks.join("%%");
+    var taskpscc = "taskps=" + taskps.join("%%");
+    var tlscc = "tls=" + tls.join("%%");
+    var listscc = "lists=" + lists.join("%%");
+    document.cookie = taskcc;
+    document.cookie = taskpscc;
+    document.cookie = tlscc;
+    document.cookie = listscc;
+}
+
 function about() {
     document.getElementById("tasks").innerHTML = "";
     document.getElementById("subconsole").innerHTML = "<button id='x' onclick='showTasks()'>X</button><h1>About</h1><br><p>Checkoffs is a web based task manager application, origionaly written in Python.</p>";
@@ -22,12 +77,11 @@ function about() {
 function sl(listnumber) {
     curlist = lists[listnumber];
     curlistnum = listnumber;
-    console.log(curlist);
-    console.log(curlistnum);
     showTasks();
 }
 
 function showTasks() {
+    writeCookies();
     listcounter = 0;
     var sthtml = ""
     var numberoflists = lists.length;
@@ -36,35 +90,33 @@ function showTasks() {
         lhtml = lhtml + "<li class='dropdown'><a href='javascript:void(0)' class='dropbtn' onclick='sl(" + listcounter + ")'>" + lists[listcounter] + "</a></li>";
         listcounter = listcounter + 1;
     }
-    document.getElementById("lists").innerHTML = lhtml + "</ul>"
+    document.getElementById("lists").innerHTML = lhtml + "</ul>";
     document.getElementById("subconsole").innerHTML = "<h1>" + curlist + "</h1><button id='addnew' onclick='addNew()'>Add New</button><br><br>";
     var numberoftasks = tasks.length;
     taskcounter = 0;
-    console.log("fcln=" + filter[curlistnum]);
-    console.log("filter=" + filter);
     if (sort[curlistnum] == "alpha") {
-        tasks.sort()
+        tasks.sort();
         sort[0] = "";
     }
     if (sort[curlistnum] == "prio") {
         while (taskcounter != numberoftasks) {
-            if (taskps[(taskcounter)] == 2) {
+            if (taskps[(taskcounter)] == "2") {
                 if (curlist == tls[taskcounter]) {
                 var sthtml = sthtml + "<button id = 'tbp2' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                 var sthtml = sthtml + "<strong>" + tasks[(taskcounter)] + "</strong>";
-                var sthtml = sthtml + "<br><br>";
+                var sthtml = sthtml + "   <em><a href='#' onclick='editTask(" + (taskcounter) + ")'>Edit Task</a></em><br><br>";
             }
             }
         taskcounter = taskcounter + 1;
         }
         taskcounter = 0;
         while (taskcounter != numberoftasks) {
-            if (taskps[(taskcounter)] == 1) {
+            if (taskps[(taskcounter)] == "1") {
                 if (filter[curlistnum] != "h") {
                     if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tbp1' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
-                    var sthtml = sthtml + "<br><br>";
+                    var sthtml = sthtml + "   <em><a href='#' onclick='editTask(" + (taskcounter) + ")'>Edit Task</a></em><br><br>";
                     }
                 }
             }
@@ -72,12 +124,12 @@ function showTasks() {
         }
         taskcounter = 0;
         while (taskcounter != numberoftasks) {
-            if (taskps[(taskcounter)] == 0) {
+            if (taskps[(taskcounter)] == "0") {
                 if (filter[curlistnum] == "a") {
                     if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tb' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
-                    var sthtml = sthtml + "<br><br>";
+                    var sthtml = sthtml + "   <em><a href='#' onclick='editTask(" + (taskcounter) + ")'>Edit Task</a></em><br><br>";
                     }
                 }
             }
@@ -85,27 +137,27 @@ function showTasks() {
         }
     } else {
         while (taskcounter != numberoftasks) {
-            if (taskps[(taskcounter)] == 0) {
+            if (taskps[(taskcounter)] == "0") {
                 if (filter[curlistnum] == "a") {
                     if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tb' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
-                    var sthtml = sthtml + "<br><br>";
+                    var sthtml = sthtml + "   <em><a href='#' onclick='editTask(" + (taskcounter) + ")'>Edit Task</a></em><br><br>";
                     }
                 }
-            } else if (taskps[(taskcounter)] == 1) {
+            } else if (taskps[(taskcounter)] == "1") {
                 if (filter[curlistnum] != "h") {
                     if (curlist == tls[taskcounter]) {
                     var sthtml = sthtml + "<button id = 'tbp1' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                     var sthtml = sthtml + tasks[(taskcounter)];
-                    var sthtml = sthtml + "<br><br>";
+                    var sthtml = sthtml + "   <em><a href='#' onclick='editTask(" + (taskcounter) + ")'>Edit Task</a></em><br><br>";
                     }
                 }
-            } else if (taskps[(taskcounter)] == 2) {
+            } else if (taskps[(taskcounter)] == "2") {
                 if (curlist == tls[taskcounter]) {
                 var sthtml = sthtml + "<button id = 'tbp2' onclick='completeTask(" + (taskcounter) + ")'>X</button> ";
                 var sthtml = sthtml + "<strong>" + tasks[(taskcounter)] + "</strong>";
-                var sthtml = sthtml + "<br><br>";
+                var sthtml = sthtml + "   <em><a href='#' onclick='editTask(" + (taskcounter) + "'>Edit Task</a></em><br><br>";
                 }
             }
         var taskcounter = taskcounter + 1;
@@ -116,7 +168,7 @@ function showTasks() {
 
 function addNew() {
     document.getElementById("tasks").innerHTML = "";
-    var anhtml = "<button id='x' onclick='showTasks()'>X</button><h1>Add New Task</h1><br><form name='addTaskForm'onsubmit='return insertTask()'><h2>Task Name</h2><br><input type='text' id='taskname' name='taskname'></input><br><br><h2>Task Priority</h2><br><input type='radio' id='low' name='taskp' value=0></input><label for='low'>Low</label><br><input type='radio' id='medium' name='taskp' value=1></input><label for='medium'>Medium</label><br><input type='radio' id='high' name='taskp' value=2></input><label for='high'>High</label><br><h2>List</h2><br>";
+    var anhtml = "<button id='x' onclick='showTasks()'>X</button><h1>Add New Task</h1><br><form name='addTaskForm'onsubmit='return insertTask()'><h2>Task Name</h2><br><input type='text' id='taskname' name='taskname'></input><br><br><h2>Task Priority</h2><br><input type='radio' id='low' name='taskp' value='0'></input><label for='low'>Low</label><br><input type='radio' id='medium' name='taskp' value='1'></input><label for='medium'>Medium</label><br><input type='radio' id='high' name='taskp' value='2'></input><label for='high'>High</label><br><h2>List</h2><br>";
     var numberoflists = lists.length;
     listcounter = 0;
     while (numberoflists != listcounter) {
@@ -210,9 +262,20 @@ function insertSorting() {
     showTasks();
 }
 
-function editTask() {
+var ets;
+var tte;
+
+function editTask(tasknumber) {
     document.getElementById("tasks").innerHTML = "";
-    var ethtml = "<button id='x' onclick='showTasks()'>X</button><h1>Edit Task</h1><br><form name='editTaskForm' onsubmit='return insertEditing()'><h2>Task Number</h2><br><input type='text' id='tasknumber' name='tasknumber'></input><br><h2>Task Text</h2><br><input type='text' id='tasktext' name='tasktext'></input><br><h2>List</h2>";
+    var ethtml = "<button id='x' onclick='showTasks()'>X</button><h1>Edit Task</h1><br><form name='editTaskForm' onsubmit='return insertEditing()'>";
+    if (tasknumber == undefined) {
+        ethtml = ethtml + "<h2>Task Number</h2><br><input type='text' id='tasknumber' name='tasknumber'></input><br>";
+        ets = false;
+    } else {
+        tte = tasknumber;
+        ets = true;
+    }
+    ethtml = ethtml + "<h2>Task Text</h2><br><input type='text' id='tasktext' name='tasktext'></input><br><h2>List</h2>";
     var numberoflists = lists.length;
     listcounter = 0;
     while (numberoflists != listcounter) {
@@ -224,11 +287,16 @@ function editTask() {
 }
 
 function insertEditing() {
-    var w = document.forms["editTaskForm"]["tasknumber"].value;
+    if (ets == false) {
+        var w = document.forms["editTaskForm"]["tasknumber"].value;
+    }
     var v = document.forms["editTaskForm"]["tasktext"].value;
     var vv = document.forms["editTaskForm"]["clist"].value;
-    tasks[(w-1)] = v;
-    tls[(w-1)] = vv;
+    if (ets == true) {
+        w = tte;
+    }
+    tasks[(w)] = v;
+    tls[(w)] = vv;
     showTasks();
 }
 
@@ -339,4 +407,41 @@ function editList() {
     document.getElementById("subconsole").innerHTML = elhtml;
 }
 
+function insertDl() {
+    var e = document.forms["deleteListForm"]["clist"].value;
+    taskcounter = 0;
+    listcounter = 0;
+    var numberoftasks = tasks.length;
+    var numberoflists = lists.length;
+    while (numberoflists != listcounter) {
+        if (lists[listcounter] == e) {
+            lists.splice(listcounter, 1)
+        }
+        listcounter = listcounter + 1;
+    }
+    while (numberoftasks != taskcounter) {
+        if (tls[taskcounter] == e) {
+            tasks.splice(taskcounter, 1);
+            taskps.splice(taskcounter, 1);
+            tls.splice(taskcounter, 1);
+        }
+        taskcounter = taskcounter + 1;
+    }
+    showTasks();
+}
+
+function deleteList() {
+    document.getElementById("tasks").innerHTML = "";
+    var elhtml = "<button id='x' onclick='showTasks()'>X</button><h1>Delete List</h1><br><h2>Choose List</h2><form name='deleteListForm' onsubmit='return insertDl()'>";
+    var numberoflists = lists.length;
+    listcounter = 0;
+    while (numberoflists != listcounter) {
+        elhtml = elhtml + "<input type='radio' id='" + lists[listcounter] + "' name='clist' value='" + lists[listcounter] + "'></input><label for='" + lists[listcounter] + "'>" + lists[listcounter] + "</label><br>";
+        listcounter = listcounter + 1;
+    }
+    elhtml = elhtml + "<br><br><input type='submit' id='submit-button' value='Submit'></form>";
+}
+
+getCookies();
+sl(0);
 showTasks();
