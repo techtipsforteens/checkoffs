@@ -1,4 +1,4 @@
-<h1><strong>Checkoffs- Web Edition</strong></h1>
+<h1><strong>Checkoffs</strong></h1>
 <img src="https://techtipsforteens.com/checkoffs/demo.png">
 <h1>About</h1>
 Checkoffs has been redesigned for the web. Now, you can do everything from your browser window.
